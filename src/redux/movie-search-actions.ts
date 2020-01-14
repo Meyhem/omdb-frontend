@@ -1,3 +1,5 @@
-import { createAction } from 'typesafe-actions'
+import { actionCreatorFactory } from 'typescript-fsa'
 
-export const SET_SEARCH = createAction('@moview-search/SET_SEARCH');
+const movieSearchFactory = actionCreatorFactory('movie-search')
+
+export const SET_SEARCH = movieSearchFactory<string>('movie-search')

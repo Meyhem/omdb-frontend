@@ -1,4 +1,7 @@
-import { Action } from 'redux'
+import { reducerWithInitialState } from 'typescript-fsa-reducers'
+import produce from 'immer'
+
+import { SET_SEARCH } from './movie-search-actions'
 
 export interface MovieSearchState {
     search: string
@@ -8,10 +11,7 @@ const initial: MovieSearchState = {
     search: ''
 }
 
-const actionMap = {
-    
-}
-
-export function movieSearchReducer(state: MovieSearchState=initial, action): MovieSearchState {
-    return state
-}
+export const movieSearchReducer = reducerWithInitialState(initial)
+    .case(SET_SEARCH, (state, payload) => produce(state, draft => {
+        draft.search = payload
+    }))
