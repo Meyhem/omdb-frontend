@@ -13,7 +13,8 @@ type IOwnProps = {}
 export type IMovieSearchProps =  IStateProps & IDispatchProps & IOwnProps
 
 const mapStateToProps = (state: IApplicationStore) => ({
-  search: state.movieSearch.search
+  ...state.movieSearch,
+
 })
 
 const mapDispatchToProps = (d: Dispatch) => ({

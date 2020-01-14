@@ -3,11 +3,11 @@ import { fork } from 'redux-saga/effects'
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
 
-import { MovieSearchState, movieSearchReducer } from './movie-search-reducer'
+import { IMovieSearchState, movieSearchReducer } from './movie-search-reducer'
 import { movieSearchRootSaga } from './movie-search-saga'
 
 export interface IApplicationStore {
-    movieSearch: MovieSearchState
+    movieSearch: IMovieSearchState
 }
 
 const reducers = combineReducers({
