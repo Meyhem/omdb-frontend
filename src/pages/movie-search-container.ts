@@ -3,8 +3,7 @@ import { Dispatch } from "redux"
 
 import { IApplicationStore } from "../redux/store"
 import { MovieSearchPage } from "./movie-search-page"
-import { SET_SEARCH } from "../redux/movie-search-actions"
-
+import { SET_SEARCH, SET_PAGE } from "../redux/movie-search-actions"
 
 type IStateProps = ReturnType<typeof mapStateToProps>
 type IDispatchProps = ReturnType<typeof mapDispatchToProps>
@@ -13,12 +12,12 @@ type IOwnProps = {}
 export type IMovieSearchProps =  IStateProps & IDispatchProps & IOwnProps
 
 const mapStateToProps = (state: IApplicationStore) => ({
-  ...state.movieSearch,
-
+  ...state.movieSearch
 })
 
 const mapDispatchToProps = (d: Dispatch) => ({
-  setSearchText: (s: string) => d(SET_SEARCH(s))
+  setSearchText: (s: string) => d(SET_SEARCH(s)),
+  setPage: (p: number) => d(SET_PAGE(p))
 })
 
 export const MovieSearchContainer =

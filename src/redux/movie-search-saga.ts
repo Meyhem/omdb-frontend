@@ -1,14 +1,21 @@
 // import {  } from 'redux-saga'
-import { take, fork, cancel, delay, call, put, takeLatest } from 'redux-saga/effects'
+import { take, fork, cancel, delay, call, put, takeLatest, select } from 'redux-saga/effects'
 
-import { SET_SEARCH, FETCH_SEARCH_MOVIES } from './movie-search-actions'
+import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE } from './movie-search-actions'
 import { Action } from 'typescript-fsa'
-import { IMovieThumbnail } from './movie-search-reducer'
+import { IMovieThumbnail, selectCurrentSearchQuery } from './movie-search-reducer'
 
 export function* movieSearchRootSaga() {
   yield fork(setSearch)
 
   yield takeLatest(FETCH_SEARCH_MOVIES.BEGIN.type, fetchSearchMovies)
+  yield takeLatest(SET_PAGE.type, nextPage)
+}
+
+function* nextPage(action: Action<number>) {
+  const query = yield select(selectCurrentSearchQuery())
+
+  yield put(FETCH_SEARCH_MOVIES.BEGIN({query, page: action.payload}))
 }
 
 function* setSearch() {

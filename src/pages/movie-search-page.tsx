@@ -7,12 +7,8 @@ import { Spinner } from '../components/spinner'
 
 import './movie-search-page.scss'
 
-
 export const MovieSearchPage = (props: IMovieSearchProps) => {
-  return <div className='page movies-search-page'>
-    <section>
-      <h1 className='is-size-1'>OMDB - Demo app</h1>
-    </section>
+  return <div className='movies-search-page'>
     <section className="hero is-info">
       <div className="hero-body">
         <div className="container">
@@ -35,15 +31,21 @@ export const MovieSearchPage = (props: IMovieSearchProps) => {
     </section>
 
     <section className='container movie-box-container'>
+      {!props.loading &&
+        props.movieThumbnails &&
+        !!props.movieThumbnails.length &&
+        <button className='button primary next-button'
+          onClick={() => props.setPage(props.page + 1)}
+        >Next &rarr;</button>}
+
       {props.loading && <Spinner />}
       <div className="columns is-multiline">
 
         {!props.loading &&
           props.movieThumbnails &&
           props.movieThumbnails.map(movie =>
-            <div className='column is-mobile-full is-one-fifth'>
+            <div className='column is-mobile-full is-one-fifth' key={movie.id}>
               <MovieBox
-                key={movie.id}
                 name={movie.name}
                 id={movie.id}
                 posterUrl={movie.posterUrl}

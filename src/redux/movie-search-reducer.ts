@@ -1,7 +1,8 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import produce from 'immer'
 
-import { SET_SEARCH, FETCH_SEARCH_MOVIES } from './movie-search-actions'
+import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE } from './movie-search-actions'
+import { IApplicationStore } from './store'
 
 export interface IMovieSearchState {
     search: string
@@ -30,6 +31,9 @@ export const movieSearchReducer = reducerWithInitialState(initial)
         draft.movieThumbnails = []
         draft.page = 1
     }))
+    .case(SET_PAGE, (state, payload) => produce(state, draft => {
+        draft.page = payload
+    }))
     .case(FETCH_SEARCH_MOVIES.BEGIN, (state, payload) => produce(state, draft => {
         draft.loading = true
     }))
@@ -41,3 +45,4 @@ export const movieSearchReducer = reducerWithInitialState(initial)
         draft.loading = false
     }))
 
+export const selectCurrentSearchQuery = () => (state: IApplicationStore) => state.movieSearch.search
