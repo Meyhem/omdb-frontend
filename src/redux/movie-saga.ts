@@ -77,7 +77,6 @@ function* fetchMovieDetail(action: Action<{id: string}>) {
       history.push('/')
       return
     }
-    console.log(json)
     const detail: IMovieDetail = {
       id: json.imdbID,
       title: json.Title,

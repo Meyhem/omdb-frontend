@@ -1,8 +1,10 @@
 import React from 'react'
 import { IMovieDetailProps } from './movie-detail-container'
 import { Spinner } from '../components/spinner'
+import { FavouriteButton } from '../components/toggle-button'
 
-import './movie-detail-page.scss';
+import './movie-detail-page.scss'
+
 
 export const MovieDetailPage = ({
   id,
@@ -35,7 +37,7 @@ export const MovieDetailPage = ({
           <div className='media'>
             <div className='media-content'>
               <p className='title is-4'>{movie?.title}
-                <span onClick={() => toggleFavourite(movie!)} className={`favourite-button ${isFavourite ? 'active' : ''}`}>★</span>
+                <FavouriteButton text='★' active={isFavourite} onClick={() => toggleFavourite(movie!)} />
               </p>
               <p className='subtitle'>{movie?.year}</p>
             </div>
