@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, Middleware } from 'redux'
 import { fork } from 'redux-saga/effects'
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
@@ -19,7 +19,11 @@ const sagas = function* rootSaga() {
 }
 
 const sagaMiddleware = createSagaMiddleware()
+const middlewares: Middleware[] = [sagaMiddleware]
+if (process.env.NODE_ENV === 'development') {
+    middlewares.push(logger)
+}
 
-export const store = createStore(reducers, undefined, applyMiddleware(logger, sagaMiddleware))
+export const store = createStore(reducers, undefined, applyMiddleware(...middlewares))
 
 sagaMiddleware.run(sagas)

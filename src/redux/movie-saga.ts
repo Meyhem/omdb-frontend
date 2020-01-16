@@ -1,9 +1,11 @@
 import { take, fork, cancel, delay, call, put, takeLatest, select } from 'redux-saga/effects'
 
-import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE, FETCH_MOVIE_DETAIL } from './movie-actions'
+import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE, FETCH_MOVIE_DETAIL, TOGGLE_MOVIE_FAVOURITE } from './movie-actions'
 import { Action } from 'typescript-fsa'
-import { IMovieThumbnail, selectCurrentSearchQuery, IMovieDetail } from './movie-reducer'
+import { IMovieThumbnail, selectCurrentSearchQuery, IMovieDetail, selectFavourites } from './movie-reducer'
 import { history } from '../services/history'
+import { lsset } from '../services/local-storage'
+import { FAVOURITES_LS_KEY } from '../const'
 
 export function* movieRootSaga() {
   yield fork(setSearch)
@@ -11,6 +13,8 @@ export function* movieRootSaga() {
   yield takeLatest(FETCH_SEARCH_MOVIES.BEGIN.type, fetchSearchMovies)
   yield takeLatest(FETCH_MOVIE_DETAIL.BEGIN.type, fetchMovieDetail)
   yield takeLatest(SET_PAGE.type, nextPage)
+
+  yield takeLatest(TOGGLE_MOVIE_FAVOURITE.type, storeFavourites)
 }
 
 function* nextPage(action: Action<number>) {
@@ -73,8 +77,9 @@ function* fetchMovieDetail(action: Action<{id: string}>) {
       history.push('/')
       return
     }
-
+    console.log(json)
     const detail: IMovieDetail = {
+      id: json.imdbID,
       title: json.Title,
       genre: json.Genre,
       released: json.Released,
@@ -87,4 +92,9 @@ function* fetchMovieDetail(action: Action<{id: string}>) {
   } catch (e) {
     yield put(FETCH_MOVIE_DETAIL.ERROR(e))
   }
+}
+
+function* storeFavourites() {
+  const favourites = yield select(selectFavourites())
+  lsset(FAVOURITES_LS_KEY, favourites)
 }

@@ -1,8 +1,10 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import produce from 'immer'
 
-import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE, FETCH_MOVIE_DETAIL } from './movie-actions'
+import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE, FETCH_MOVIE_DETAIL, TOGGLE_MOVIE_FAVOURITE } from './movie-actions'
 import { IApplicationStore } from './store'
+import { lsget } from '../services/local-storage'
+import { FAVOURITES_LS_KEY } from '../const'
 
 export interface IMovieState {
     search: string
@@ -11,6 +13,8 @@ export interface IMovieState {
     movieThumbnails: IMovieThumbnail[] | null
 
     movieDetail: IMovieDetail | null
+
+    favourites: IMovieDetail[]
 }
 
 export interface IMovieThumbnail {
@@ -21,6 +25,7 @@ export interface IMovieThumbnail {
 }
 
 export interface IMovieDetail {
+    id: string
     title: string
     year: number
     released: string
@@ -34,7 +39,8 @@ const initial: IMovieState = {
     page: 1,
     loading: false,
     movieThumbnails: [],
-    movieDetail: null
+    movieDetail: null,
+    favourites: lsget(FAVOURITES_LS_KEY) || []
 }
 
 export const movieReducer = reducerWithInitialState(initial)
@@ -58,7 +64,14 @@ export const movieReducer = reducerWithInitialState(initial)
         draft.loading = false
         draft.movieDetail = null
     }))
-
+    .case(TOGGLE_MOVIE_FAVOURITE, (state, payload) => produce(state, draft => {
+        const idx = draft.favourites.findIndex(v => v.id === payload.movie.id)
+        if (idx < 0) {
+            draft.favourites.push(payload.movie)
+        } else {
+            draft.favourites.splice(idx, 1)
+        }
+    }))
     .cases([FETCH_SEARCH_MOVIES.BEGIN], (state, payload) => produce(state, draft => {
         draft.loading = true
     }))
@@ -67,3 +80,5 @@ export const movieReducer = reducerWithInitialState(initial)
     }))
 
 export const selectCurrentSearchQuery = () => (state: IApplicationStore) => state.movies.search
+
+export const selectFavourites = () => (state: IApplicationStore) => state.movies.favourites

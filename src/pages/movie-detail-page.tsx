@@ -2,11 +2,15 @@ import React from 'react'
 import { IMovieDetailProps } from './movie-detail-container'
 import { Spinner } from '../components/spinner'
 
+import './movie-detail-page.scss';
+
 export const MovieDetailPage = ({
   id,
   movie,
   loading,
+  isFavourite,
 
+  toggleFavourite,
   fetchMovie
 }: IMovieDetailProps) => {
 
@@ -14,14 +18,14 @@ export const MovieDetailPage = ({
     fetchMovie(id)
   }, [id, fetchMovie])
 
-  return <div className='container '>
+  return <div className='container movie-detail-page'>
     <div className='columns'>
       <div className='column is-4' />
       {loading && <div className='column is-4'>
         <Spinner />
       </div>
       }
-      {!loading && <div className='card column is-4'>
+      {!loading && <div className='card favourite-card column is-4'>
         <div className='card-image'>
           <figure className='image is-3by4'>
             <img src={movie?.poster} alt='Poster' />
@@ -30,7 +34,9 @@ export const MovieDetailPage = ({
         <div className='card-content'>
           <div className='media'>
             <div className='media-content'>
-              <p className='title is-4'>{movie?.title}</p>
+              <p className='title is-4'>{movie?.title}
+                <span onClick={() => toggleFavourite(movie!)} className={`favourite-button ${isFavourite ? 'active' : ''}`}>★</span>
+              </p>
               <p className='subtitle'>{movie?.year}</p>
             </div>
           </div>

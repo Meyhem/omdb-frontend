@@ -1,0 +1,1 @@
+export const FAVOURITES_LS_KEY = 'favorited-movies'
