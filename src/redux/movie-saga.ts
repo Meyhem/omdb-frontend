@@ -1,14 +1,15 @@
-// import {  } from 'redux-saga'
 import { take, fork, cancel, delay, call, put, takeLatest, select } from 'redux-saga/effects'
 
-import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE } from './movie-search-actions'
+import { SET_SEARCH, FETCH_SEARCH_MOVIES, SET_PAGE, FETCH_MOVIE_DETAIL } from './movie-actions'
 import { Action } from 'typescript-fsa'
-import { IMovieThumbnail, selectCurrentSearchQuery } from './movie-search-reducer'
+import { IMovieThumbnail, selectCurrentSearchQuery, IMovieDetail } from './movie-reducer'
+import { history } from '../services/history'
 
-export function* movieSearchRootSaga() {
+export function* movieRootSaga() {
   yield fork(setSearch)
 
   yield takeLatest(FETCH_SEARCH_MOVIES.BEGIN.type, fetchSearchMovies)
+  yield takeLatest(FETCH_MOVIE_DETAIL.BEGIN.type, fetchMovieDetail)
   yield takeLatest(SET_PAGE.type, nextPage)
 }
 
@@ -57,5 +58,33 @@ function* fetchSearchMovies(action: Action<{query: string, page: number}>) {
     yield put(FETCH_SEARCH_MOVIES.SUCCESS(mapped))
   } catch(e) {
     yield put(FETCH_SEARCH_MOVIES.ERROR(e))
+  }
+}
+
+function* fetchMovieDetail(action: Action<{id: string}>) {
+  try {
+    const response: Response = yield call(fetch, `https://www.omdbapi.com/?apikey=82342796&i=${action.payload.id}`)
+
+    const json = yield response.json()
+
+    if (json.Error) {
+      yield put(FETCH_MOVIE_DETAIL.SUCCESS(null))
+      alert(`Unable to display page (${json.Error})`)
+      history.push('/')
+      return
+    }
+
+    const detail: IMovieDetail = {
+      title: json.Title,
+      genre: json.Genre,
+      released: json.Released,
+      year: Number(json.Year),
+      poster: json.Poster,
+      plot: json.Plot
+    }
+
+    yield put(FETCH_MOVIE_DETAIL.SUCCESS(detail))
+  } catch (e) {
+    yield put(FETCH_MOVIE_DETAIL.ERROR(e))
   }
 }

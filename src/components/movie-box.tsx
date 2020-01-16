@@ -1,6 +1,7 @@
 import React from 'react'
 
 import './movie-box.scss'
+import { Link } from 'react-router-dom'
 
 interface IProps {
     name: string
@@ -10,11 +11,13 @@ interface IProps {
 
 export const MovieBox = (props: IProps) => {
     return <div className='movie-box box'>
-        <div>
-            <strong>{props.name}</strong>
-        </div>
-        <div className=''>
-            <img src={props.posterUrl} alt='Poster' />
-        </div>
+        <Link to={`/movie/${props.id}`}>
+            <div>
+                <strong>{props.name}</strong>
+            </div>
+            <div className=''>
+                <img src={props.posterUrl} alt='Poster' />
+            </div>
+        </Link>
     </div>
 }

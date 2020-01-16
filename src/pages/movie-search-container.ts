@@ -3,7 +3,7 @@ import { Dispatch } from "redux"
 
 import { IApplicationStore } from "../redux/store"
 import { MovieSearchPage } from "./movie-search-page"
-import { SET_SEARCH, SET_PAGE } from "../redux/movie-search-actions"
+import { SET_SEARCH, SET_PAGE } from "../redux/movie-actions"
 
 type IStateProps = ReturnType<typeof mapStateToProps>
 type IDispatchProps = ReturnType<typeof mapDispatchToProps>
@@ -12,7 +12,7 @@ type IOwnProps = {}
 export type IMovieSearchProps =  IStateProps & IDispatchProps & IOwnProps
 
 const mapStateToProps = (state: IApplicationStore) => ({
-  ...state.movieSearch
+  ...state.movies
 })
 
 const mapDispatchToProps = (d: Dispatch) => ({

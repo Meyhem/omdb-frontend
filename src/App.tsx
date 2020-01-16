@@ -15,12 +15,8 @@ const App = () => {
       </section>
       <Router history={history}>
         <Switch>
-          <Route path='/' exact={true}>
-            <MovieSearchContainer />
-          </Route>
-          <Route path='/movie/:id' exact={true}>
-            <MovieDetailContainer />
-          </Route>
+          <Route path='/' exact={true} component={MovieSearchContainer} />
+          <Route path='/movie/:id' exact={true} component={MovieDetailContainer} />
         </Switch>
       </Router>
     </div>

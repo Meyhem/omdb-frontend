@@ -3,19 +3,19 @@ import { fork } from 'redux-saga/effects'
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
 
-import { IMovieSearchState, movieSearchReducer } from './movie-search-reducer'
-import { movieSearchRootSaga } from './movie-search-saga'
+import { IMovieState, movieReducer } from './movie-reducer'
+import { movieRootSaga } from './movie-saga'
 
 export interface IApplicationStore {
-    movieSearch: IMovieSearchState
+    movies: IMovieState
 }
 
 const reducers = combineReducers({
-    movieSearch: movieSearchReducer
+    movies: movieReducer
 })
 
 const sagas = function* rootSaga() {
-    yield fork(movieSearchRootSaga)
+    yield fork(movieRootSaga)
 }
 
 const sagaMiddleware = createSagaMiddleware()

@@ -34,9 +34,19 @@ export const MovieSearchPage = (props: IMovieSearchProps) => {
       {!props.loading &&
         props.movieThumbnails &&
         !!props.movieThumbnails.length &&
+        props.page > 1 &&
+        <button className='button primary next-button'
+          onClick={() => props.setPage(props.page - 1)}
+        >Prev &larr;</button>}
+      &nbsp;
+      {!props.loading &&
+        props.movieThumbnails &&
+        !!props.movieThumbnails.length &&
         <button className='button primary next-button'
           onClick={() => props.setPage(props.page + 1)}
         >Next &rarr;</button>}
+
+
 
       {props.loading && <Spinner />}
       <div className="columns is-multiline">
