@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/omdb-frontend/static/css/main.8cbf9d10.chunk.css",
-    "main.js": "/omdb-frontend/static/js/main.7f014bff.chunk.js",
-    "main.js.map": "/omdb-frontend/static/js/main.7f014bff.chunk.js.map",
+    "main.js": "/omdb-frontend/static/js/main.da06ad04.chunk.js",
+    "main.js.map": "/omdb-frontend/static/js/main.da06ad04.chunk.js.map",
     "runtime-main.js": "/omdb-frontend/static/js/runtime-main.d051c915.js",
     "runtime-main.js.map": "/omdb-frontend/static/js/runtime-main.d051c915.js.map",
     "static/js/2.2f25c05b.chunk.js": "/omdb-frontend/static/js/2.2f25c05b.chunk.js",
     "static/js/2.2f25c05b.chunk.js.map": "/omdb-frontend/static/js/2.2f25c05b.chunk.js.map",
     "index.html": "/omdb-frontend/index.html",
-    "precache-manifest.94093d4cd108ec94e07fd512f2af1121.js": "/omdb-frontend/precache-manifest.94093d4cd108ec94e07fd512f2af1121.js",
+    "precache-manifest.3ff4b97849278b4768d0b9a5890512be.js": "/omdb-frontend/precache-manifest.3ff4b97849278b4768d0b9a5890512be.js",
     "service-worker.js": "/omdb-frontend/service-worker.js",
     "static/css/main.8cbf9d10.chunk.css.map": "/omdb-frontend/static/css/main.8cbf9d10.chunk.css.map",
     "static/js/2.2f25c05b.chunk.js.LICENSE": "/omdb-frontend/static/js/2.2f25c05b.chunk.js.LICENSE"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.d051c915.js",
     "static/js/2.2f25c05b.chunk.js",
     "static/css/main.8cbf9d10.chunk.css",
-    "static/js/main.7f014bff.chunk.js"
+    "static/js/main.da06ad04.chunk.js"
   ]
 }
